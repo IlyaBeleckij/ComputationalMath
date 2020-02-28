@@ -1,18 +1,22 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.w3c.dom.ls.LSOutput;
 
-import javax.imageio.ImageTranscoder;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
+import java.util.Scanner;
 
-public class Reader {
+public class InputOutput {
 
+    private double epsilone;
+    private double[][] a;
+    private double[] b;
+    private double[] x;
+    private double[] meansures;
+    private int k;
+
+    private Scanner scanner = new Scanner(System.in);
     private JSONParser jsonParser = new JSONParser();
+
     public double[][] readOddsFromFile() {
         double[][] matrix = new double[0][];
         try (FileReader reader = new FileReader("input.json")) {
@@ -44,7 +48,7 @@ public class Reader {
             return epsilon;
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Ошибка файла JSON");
+            System.err.println("Ошибка файла JSON");
             return 0;
         }
     }
@@ -63,9 +67,58 @@ public class Reader {
             }
 
         } catch (Exception e) {
-            System.out.println("Ошибка файла JSON");
+            System.err.println("Ошибка файла JSON");
         }
         return b;
+    }
+
+    public void getInputs() {
+        System.out.println("Введите n");
+        int n = scanner.nextInt();
+        a = new double[n][n];
+        b = new double[n];
+        System.err.println("Введите коэффициенты");
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a.length; j++) {
+                a[i][j] = scanner.nextDouble();
+            }
+        }
+        System.out.println("Введите В");
+        for (int i = 0; i < n; i++) {
+            b[i] = scanner.nextInt();
+        }
+        System.out.println("Введите эпсилон");
+        epsilone = scanner.nextDouble();
+    }
+
+    public double getEpsilone() {
+        return epsilone;
+    }
+
+    public double[][] getA() {
+        return a;
+    }
+
+    public double[] getB() {
+        return b;
+    }
+
+    public void setOutputs(double[] x, double[] meansures, int k) {
+        this.x = x;
+        this.meansures = meansures;
+        this.k = k;
+    }
+
+    public void getOutput() {
+        for (int i = 0; i < meansures.length; i++) {
+            System.out.printf("Погрешность № %d  == %f\n", i + 1, meansures[i]);
+        }
+
+        for (double v : x) {
+            System.out.println(v);
+        }
+
+        System.out.printf("Количество итераций -- %d", k);
     }
 }
 
