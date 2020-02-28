@@ -12,38 +12,25 @@ public class anotherMain {
         double b[];
         double e;
         Scanner scanner = new Scanner(System.in);
+        InputOutput inputOutput = new InputOutput();
         boolean meansuresFlag = true, priorityFlag = true;
         while (true) {
             System.out.println("Ввод с файла? (Y/another)");
             if (scanner.nextLine().equals("Y")) {
-                Reader reader = new Reader();
-                a = reader.readOddsFromFile();
-                b = reader.readB();
-                e = reader.readEpsilon();
+
+                a = inputOutput.readOddsFromFile();
+                b = inputOutput.readB();
+                e = inputOutput.readEpsilon();
                 rows = a.length;
                 columns = a.length;
 
             } else {
-                System.out.println("Введите количество строк");
-                rows = scanner.nextInt();
-                System.out.println("Введите количество столбцов");
-                columns = scanner.nextInt();
-                System.out.println("Введите вектор B");
-                b = new double[rows];
-
-                for (int i = 0; i < b.length; i++) {
-                    b[i] = scanner.nextDouble();
-                }
-                System.out.println("Введите коэффициенты матрицы X");
-                a = new double[rows][columns];
-                for (int i = 0; i < rows; i++) {
-                    for (int j = 0; j < columns; j++) {
-                        a[i][j] = scanner.nextDouble();
-                    }
-                }
-
-                System.out.println("Введите эпсилон");
-                e = scanner.nextDouble();
+                inputOutput.getInputs();
+                a = inputOutput.getA();
+                b = inputOutput.getB();
+                e = inputOutput.getEpsilone();
+                rows = a.length;
+                columns = a.length;
             }
             for (int sumj = 0, i = 0; i < rows; i++) {
                 sumj = 0;
@@ -96,15 +83,7 @@ public class anotherMain {
             k++;
 
         }
-
-        for (int i = 0; i < meansures.length; i++) {
-            System.out.printf("Погрешность № %d  == %f\n", i + 1, meansures[i]);
-        }
-
-        for (double v : x) {
-            System.out.println(v);
-        }
-
-        System.out.printf("Количество итераций -- %d", k);
+        inputOutput.setOutputs(x, meansures, k);
+        inputOutput.getOutput();
     }
 }
