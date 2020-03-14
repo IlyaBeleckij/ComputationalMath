@@ -114,13 +114,14 @@ public class InputOutput {
         int n = Integer.parseInt(scanner.nextLine());
         a = new double[n][n];
         b = new double[n];
-        System.out.println("Введите коэффициенты");
+        System.out.println("Введите что - нибудь, если задаёте коэффициенты вручную");
         String check = scanner.nextLine();
         if (check.isEmpty()) {
             generateRandoms();
         } else {
-            for (int i = 0; i < a.length; i++) {
-                for (int j = 0; j < a.length; j++) {
+            System.out.println("Вводите коэффициенты");
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
                     a[i][j] = scanner.nextDouble();
                 }
             }
